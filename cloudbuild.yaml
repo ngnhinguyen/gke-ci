@@ -1,4 +1,16 @@
 steps:
-  - name: golang
-    args: ['go', 'run', 'main.go']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/meine-app'
+  - 'meine-app-container=gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA'
+  - '--namespace=default'
+images:
+- 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA'
+
 logs_bucket: 'gs://cr-vs-gke-bucket'
