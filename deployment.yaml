@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meine-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: meine-app
+  template:
+    metadata:
+      labels:
+        app: meine-app
+    spec:
+      containers:
+      - name: meine-app-container
+        image: gcr.io/cr-vs-gke/meine-app:v1
+        ports:
+        - containerPort: 8080

@@ -1,4 +1,5 @@
 steps:
   - name: golang
     args: ['go', 'run', 'main.go']
+    
 logs_bucket: 'gs://cr-vs-gke-bucket'

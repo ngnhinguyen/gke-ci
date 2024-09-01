@@ -1,18 +1,9 @@
 package main
 
-
 import (
-   "fmt"
-   "net/http"
+"fmt"
 )
-
-
-func handler(w http.ResponseWriter, r *http.Request) {
-   fmt.Fprintf(w, "Hello, GKE!")
-}
-
-
-func main() {
-   http.HandleFunc("/", handler)
-   http.ListenAndServe(":8080", nil)
+//run file with: go run .
+func main () {
+  fmt.Println("Hello Google Kubernetes! I like peaches.")
 }
