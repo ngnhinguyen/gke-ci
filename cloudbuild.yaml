@@ -1,16 +1,18 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/cr-vs-gke/meine-app:v1', '.']
+
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA']
+  args: ['push', 'gcr.io/cr-vs-gke/meine-app:v1']
+
 - name: 'gcr.io/cloud-builders/kubectl'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a' 
+  - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster' 
   args:
   - 'set'
   - 'image'
   - 'deployment/meine-app'
-  - 'meine-app-container=gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA'
-  - '--namespace=default'
-images:
-- 'gcr.io/$PROJECT_ID/meine-app:$COMMIT_SHA'
+  - 'meine-app-container=gcr.io/cr-vs-gke/meine-app:v1'
 
 logs_bucket: 'gs://cr-vs-gke-bucket'
